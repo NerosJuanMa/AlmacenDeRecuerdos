@@ -5,8 +5,7 @@ import Proyectos from "./pages/Proyectos";
 import SobreMi from "./pages/SobreMi";
 import Estados from "./pages/Estados";
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
 
 
 function App() {
