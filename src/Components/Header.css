@@ -1,0 +1,114 @@
+/* Header principal */
+.header {
+  /* background: radial-gradient(circle at center, var(--color-principal) 1%, var(--color-sombra) 100%); */
+  background: linear-gradient(135deg, var(--color-sombra) 0%, var(--color-principal) 100%);
+  background-color: var(--color-sombra); /* Fallback sólido */
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+  border-bottom: 2px solid var(--color-principal);
+  box-shadow: 0 5px 10px var(--color-sombra);
+}
+
+/* Título del header */
+.title {
+  font-family: 'floral-espinoso';
+  font-size: 2.5rem;
+  color: var(--color-fondo);
+  margin: 0;
+  font-weight: 700;
+}
+
+/* Navegación */
+.nav {
+  display: flex;
+  align-items: baseline;
+  gap: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+/* Enlaces de navegación */
+.navLink {
+  color: var(--color-fondo);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.navLink:hover {
+  color: var(--color-principal);
+  text-decoration: underline;
+}
+
+/* Botón principal*/
+.button {
+  background-color: var(--color-principal);
+  color: var(--color-fondo);
+  border: 1px solid var(--color-sombra);
+  /* border: none; */
+  padding: 0.5rem 1.0rem;
+  border-radius: 35px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  color: var(--color-sombra);
+  background-color: var(--color-secundario);
+  border: 1px solid var(--color-sombra);
+}
+/* 🔹 Botón hamburguesa */
+.hamburguesa {
+  display: none;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  color: var(--color-principal);
+  cursor: pointer;
+}
+
+/* 🔹 Responsive: versión móvil */
+@media (max-width: 768px) {
+  .header {
+  background: radial-gradient(circle at center, var(--color-principal) 1%, var(--color-sombra) 100%);
+  }
+  .title {
+  font-family: 'floral-espinoso';
+  font-size: 3.5rem;
+  color: var(--color-sombra);
+  margin: 0;
+  font-weight: 700;
+}
+  .hamburguesa {
+    display: block; /* mostrar el icono */
+    color: var(--color-sombra);
+  }
+
+  .nav {
+    position:absolute;
+    top: 100%;
+    right: 0;
+    background-color: var(--color-sombra);
+    background: linear-gradient(180deg, var(--color-principal) 0%, var(--color-sombra) 100%);
+    flex-direction: column;
+    /* align-items: flex-start; */
+    align-items:center;
+    gap: 1rem;
+    padding: 1rem 2rem;
+    width: 15%;
+    display: none; /* inicialmente oculto */
+  }
+
+  .nav.visible {
+    display: flex; /* mostrar al hacer clic */
+  }
+}

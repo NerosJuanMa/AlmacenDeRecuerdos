@@ -1,0 +1,61 @@
+/* Header principal */
+.header {
+  background: linear-gradient(135deg, #1e1e28 0%, #2a2a3a 100%);
+  background-color: #1e1e28; /* Fallback sólido */
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+  border-bottom: 2px solid #00C890;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Título del header */
+.title {
+  font-size: 1.5rem;
+  color: #00C890;
+  margin: 0;
+  font-weight: 700;
+}
+
+/* Navegación */
+.nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+/* Enlaces de navegación */
+.navLink {
+  color: #F0F0F0;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.navLink:hover {
+  color: #00C890;
+  text-decoration: underline;
+}
+
+/* Botón */
+.button {
+  background-color: #00C890;
+  color: #1E1E28;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #00A878;
+}

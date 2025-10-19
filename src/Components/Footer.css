@@ -1,0 +1,114 @@
+/* Footer principal */
+.footer {
+  background: linear-gradient(135deg, var(--color-sombra) 0%, var(--color-principal) 100%);
+  background-color: var(--color-sombra);  /*Fallback sólido*/
+  position:fixed;
+  bottom:0;
+  left: 0;
+  width: 100%;
+  height: 15%;
+  line-height: 1.5;
+  box-sizing: border-box;
+  z-index: 1000;
+  backdrop-filter: blur(5px); /* Esto se usa para las transparencias */
+  box-shadow: 0 5px 10px var(--color-sombra);
+  border-bottom: 2px solid var(--color-principal);
+  /*     */
+  padding: 0rem 1rem 1rem 1rem;
+  justify-content: space-between;
+  align-items: center; 
+       
+}
+/* Secciones del footer */
+.footer-section {
+  /* display: flex; */
+  /* flex-direction: column; */
+  margin: 0.1 auto;
+  padding: 0.1 0.1 0.1 0.1;
+  /* height: 2rem; */
+}
+
+/* Título principal del footer */
+.footer-title {
+  font-family: 'floral-espinoso';
+  color: var(--color-fondo);
+  font-size: 1.5rem;
+  margin-bottom: 0.1rem;
+  font-weight: 700;
+  /* line-height: 1.5; */
+    line-height: 0.05;
+    /* color: var(--color-sombra); */
+    /* font-size: 1.3rem; */
+}
+
+/* Descripción */
+.footer-description {
+  font-family: 'floral-espinoso';
+  color: var(--color-fondo);
+  margin-bottom: 1rem;
+  font-weight: 700;
+  line-height: 0.05;
+  font-size: 80%;
+}
+
+/* Parte inferior del footer */
+.footer-bottom {
+  /* margin-top: 0.1rem; */
+  /* padding-top: 0.1rem; */
+  
+  text-align: center;
+  width: 100%;
+  justify-content:center;
+  display:flex;
+  border-top: 2px solid var(--color-sombra);
+  border-top-style: double;
+  border-bottom: 2px solid var(--color-sombra);
+  border-bottom-style: double;
+  padding: 5px;
+  
+}
+.footer-copyright {
+  color: var(--color-sombra);
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 0.05;
+}
+
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .footer {
+    line-height: 1.5;
+    padding: 0rem;
+    height: 15%;
+    color: var(--color-fondo);
+  }
+  .footer-bottom {
+  border-top: 2px solid var(--color-fondo);
+  border-top-style: double;
+  border-bottom: 2px solid var(--color-fondo);
+  border-bottom-style: double;
+
+  }
+  .footer-title {
+    line-height: 0.05;
+    color: var(--color-sombra);
+    font-size: 1.3rem;
+    color: var(--color-fondo);
+  }
+
+  .footer-description{
+    line-height: 0.05;
+    font-size: 80%;
+    color: var(--color-fondo);
+  }
+    .footer-copyright {
+  color: var(--color-sombra);
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-fondo);
+}
+
+}
