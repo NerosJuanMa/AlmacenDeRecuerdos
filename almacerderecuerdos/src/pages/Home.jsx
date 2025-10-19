@@ -11,7 +11,7 @@ export default function Home() {
 
   return (
     <>
-    <div>
+    <div className='fondo'>
       <img src={TATOO_NEROS_V2_ROJO2} alt="fondo" />    
     </div>
      <div className='home'>
