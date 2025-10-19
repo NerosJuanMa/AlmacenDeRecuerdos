@@ -1,7 +1,7 @@
 
 
-import Header from "../Components/Header";
-import Footer from "../Components/Footer";
+import Header from "../components1/Header";
+import Footer from "../components1/Footer";
 import "./SobreMi.css";
 
 function SobreMi() {

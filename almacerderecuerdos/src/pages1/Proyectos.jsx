@@ -1,8 +1,8 @@
 
 
-import Header from "../Components/Header";
-import Footer from "../Components/Footer";
-import Tarjeta from "../Components/Tarjeta";
+import Header from "../components1/Header";
+import Footer from "../components1/Footer";
+import Tarjeta from "../components1/Tarjeta";
 import "./Proyectos.css";
 
 function Proyectos() {

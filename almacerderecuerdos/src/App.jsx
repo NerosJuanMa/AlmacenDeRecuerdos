@@ -1,9 +1,9 @@
 import { Routes, Route } from "react-router-dom";
-import Layout from "./components/Layout";
-import Home from "./pages/Home";
-import Proyectos from "./pages/Proyectos";
-import SobreMi from "./pages/SobreMi";
-import Estados from "./pages/Estados";
+import Layout from "./components1/Layout";
+import Home from "./pages1/Home";
+import Proyectos from "./pages1/Proyectos";
+import SobreMi from "./pages1/SobreMi";
+import Estados from "./pages1/Estados";
 import { useState } from 'react'
 
 
