@@ -11,8 +11,8 @@ export default function Home() {
   return (
     <>
     <div>
-      <img src="almacerderecuerdos\src\assets\images\TATOO NEROS_V2_ROJO2.tif" alt="fondo" />
-     </div>
+      <img src={TATOO_NEROS_V2_ROJO2} alt="fondo" />    
+    </div>
      <div className='home'>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
