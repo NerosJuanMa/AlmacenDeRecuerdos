@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import reactLogo from '../assets/react.svg'
 import viteLogo from '/vite.svg'
+import TATOO_NEROS_V2_ROJO2 from '../assets/TATOO_NEROS_V2_ROJO2.svg'
 import './Home.css'
 // import "./assets/images/TATOO_NEROS_V2_ROJO2";
 
