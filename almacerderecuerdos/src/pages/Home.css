@@ -4,7 +4,10 @@
   padding: 10rem;
   text-align: center;
 }
-
+.fondo{
+  z-index: 0;
+  size: 100%;
+}
 .logo {
   height: 6em;
   padding: 1.5em;
