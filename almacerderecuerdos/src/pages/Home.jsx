@@ -14,6 +14,12 @@ export default function Home() {
     <div className='contenedor-imagen'>
       <img src={TATOO_NEROS_V2_ROJO2} alt="fondo" />    
     </div>
+    <br /><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure delectus error fugit cum, omnis officia deleniti, praesentium commodi repellendus quis, dolorum alias magnam molestiae inventore officiis ratione quibusdam temporibus blanditiis.</p><br /><br /><br /><br /><br />
+    <br /><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure delectus error fugit cum, omnis officia deleniti, praesentium commodi repellendus quis, dolorum alias magnam molestiae inventore officiis ratione quibusdam temporibus blanditiis.</p><br /><br /><br /><br /><br />
+    <br /><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure delectus error fugit cum, omnis officia deleniti, praesentium commodi repellendus quis, dolorum alias magnam molestiae inventore officiis ratione quibusdam temporibus blanditiis.</p><br /><br /><br /><br /><br />
+    <br /><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure delectus error fugit cum, omnis officia deleniti, praesentium commodi repellendus quis, dolorum alias magnam molestiae inventore officiis ratione quibusdam temporibus blanditiis.</p><br /><br /><br /><br /><br />
+    <br /><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure delectus error fugit cum, omnis officia deleniti, praesentium commodi repellendus quis, dolorum alias magnam molestiae inventore officiis ratione quibusdam temporibus blanditiis.</p><br /><br /><br /><br /><br />
+    <br /><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure delectus error fugit cum, omnis officia deleniti, praesentium commodi repellendus quis, dolorum alias magnam molestiae inventore officiis ratione quibusdam temporibus blanditiis.</p><br /><br /><br /><br /><br />
      <div className='home'>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
