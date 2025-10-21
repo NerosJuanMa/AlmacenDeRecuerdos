@@ -1,24 +1,34 @@
 #root {
-  max-width: 1280px auto;
-  margin: 0 auto;
-  padding: 10rem;
+  max-width: auto;
+  margin: 0;
+  padding: 0;
   text-align: center;
+  /* position: absolute; */
 }
 .contenedor-imagen {
   width: 100%;
-  height: 500px; /* O el tamaño que necesites */
-  overflow: hidden; /* Oculta el área de la imagen que se recorta */
+  /* height: auto; */
+  /* O el tamaño que necesites */
+  /* overflow: hidden;  */
+  /* background-attachment: fixed; */
+  position:fixed;
+  top: auto;
+  z-index: -1;
+  background-size: contain;
+
 }
 
-.contenedor-imagen img {
+/* .contenedor-imagen img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* ¡Esta es la clave para la etiqueta <img>! */
+
+  position: relative;
+  z-index: -1;
   background-position: center center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
   min-height: 100vh;
-}
+} */
 
 .logo {
   height: 6em;
