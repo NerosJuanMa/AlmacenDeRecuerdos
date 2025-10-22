@@ -4,22 +4,19 @@
   padding: 10rem;
   text-align: center;
 }
-.contenedor-imagen {
-  width: 100%;
-  height: 500px; /* O el tamaño que necesites */
-  overflow: hidden; /* Oculta el área de la imagen que se recorta */
+.contenedor-imagen img{
+  
+  background-image: url('/almacerderecuerdos/src/assets/images/FondoYOUTUBE_copia.jpg'); /* ruta de la imagen */
+      background-size: cover;             /* ajusta al tamaño de la ventana */
+      background-position: center;        /* centra la imagen */
+      background-repeat: no-repeat;       /* evita que se repita */
+      height: 100vh;                      /* ocupa toda la altura */
+      width: 100vh;
+      margin: 0;                          /* elimina márgenes por defecto */
+  object-fit: cover;
+  overflow:visible                       z; /* Oculta el área de la imagen que se recorta */
+    
 }
-
-.contenedor-imagen img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* ¡Esta es la clave para la etiqueta <img>! */
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  min-height: 100vh;
-}
-
 .logo {
   height: 6em;
   padding: 1.5em;

@@ -80,19 +80,28 @@
 @media (max-width: 768px) {
   .header {
   background: radial-gradient(circle at center, var(--color-principal) 1%, var(--color-sombra) 100%);
+  width: 100%;
+  height: 50px;
   }
   .title {
   font-family: 'floral-espinoso';
-  font-size: 3.5rem;
+  font-size: 1.85rem;
   color: var(--color-sombra);
   margin: 0;
-  font-weight: 700;
+  font-weight: 50;
+  display: inline-block;
 }
   .hamburguesa {
     display: block; /* mostrar el icono */
     color: var(--color-sombra);
+    position:relative;
+    padding: 1px;;
+    border: 2px solid var(--color-secundario);
+    transition: transform 0.3s ease;
   }
-
+  .hamburguesa:hover{
+    transform: scale(1.2); 
+  }
   .nav {
     position:absolute;
     top: 100%;
