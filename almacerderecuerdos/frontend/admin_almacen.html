@@ -1,0 +1,199 @@
+<!-- Frontend de administración conectado al backend Node/Express/MongoDB Atlas -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Administración - Almacén Recuerdos</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f8f9fa; margin: 0; padding: 0; }
+    header { background: #343a40; color: white; text-align: center; padding: 1em 0; }
+    nav { display: flex; justify-content: center; background: #495057; }
+    nav button { background: transparent; color: white; border: none; padding: 1em; cursor: pointer; }
+    nav button.active { background: #6c757d; }
+    section { display: none; padding: 2em; }
+    section.active { display: block; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1em; }
+    th, td { padding: 0.5em; border: 1px solid #ccc; text-align: left; }
+    form { margin-top: 1em; }
+    input, select { padding: 0.5em; margin-right: 0.5em; }
+    button.crud { background: #007bff; color: white; border: none; padding: 0.5em 1em; cursor: pointer; }
+    button.delete { background: #dc3545; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Panel de Administración - Almacén Recuerdos</h1>
+  </header>
+  <nav>
+    <button id="tab-articulos" class="active">Artículos</button>
+    <button id="tab-categorias">Categorías</button>
+    <button id="tab-almacen">Almacén</button>
+  </nav>
+
+  <section id="articulos" class="active">
+    <h2>Gestión de Artículos</h2>
+    <form id="form-articulo">
+      <input type="text" id="nombre" placeholder="Nombre" required>
+      <input type="number" id="precio" placeholder="Precio">
+      <input type="text" id="tamaño" placeholder="Tamaño">
+      <input type="text" id="color" placeholder="Color">
+      <button type="submit" class="crud">Añadir</button>
+    </form>
+    <table id="tabla-articulos">
+      <thead><tr><th>Nombre</th><th>Precio</th><th>Tamaño</th><th>Color</th><th>Acciones</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <section id="categorias">
+    <h2>Gestión de Categorías</h2>
+    <form id="form-categoria">
+      <input type="text" id="nombreCat" placeholder="Nombre" required>
+      <button type="submit" class="crud">Añadir</button>
+    </form>
+    <table id="tabla-categorias">
+      <thead><tr><th>Nombre</th><th>Acciones</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <section id="almacen">
+    <h2>Gestión de Almacén</h2>
+    <form id="form-almacen">
+      <input type="text" id="articuloId" placeholder="ID Artículo" required>
+      <input type="text" id="categoriaId" placeholder="ID Categoría" required>
+      <input type="number" id="stock" placeholder="Stock" required>
+      <input type="text" id="ubicacion" placeholder="Ubicación">
+      <button type="submit" class="crud">Añadir</button>
+    </form>
+    <table id="tabla-almacen">
+      <thead><tr><th>Artículo</th><th>Categoría</th><th>Stock</th><th>Ubicación</th><th>Acciones</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <script>
+    const apiBase = 'http://localhost:4000/api';
+
+    // Navegación entre secciones
+    document.querySelectorAll('nav button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(btn.id.replace('tab-', '')).classList.add('active');
+      });
+    });
+
+    // ===================== ARTÍCULOS =====================
+    const tablaArticulos = document.querySelector('#tabla-articulos tbody');
+    async function cargarArticulos() {
+      const res = await fetch(`${apiBase}/articulos`);
+      const datos = await res.json();
+      tablaArticulos.innerHTML = datos.map(a => `
+        <tr>
+          <td>${a.nombre}</td>
+          <td>${a.precio || ''}</td>
+          <td>${a.tamaño || ''}</td>
+          <td>${a.color || ''}</td>
+          <td>
+            <button onclick="eliminarArticulo('${a._id}')" class='delete'>🗑</button>
+          </td>
+        </tr>`).join('');
+    }
+
+    document.querySelector('#form-articulo').addEventListener('submit', async e => {
+      e.preventDefault();
+      const data = {
+        nombre: nombre.value,
+        precio: parseFloat(precio.value),
+        tamaño: tamaño.value,
+        color: color.value
+      };
+      await fetch(`${apiBase}/articulos`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      e.target.reset();
+      cargarArticulos();
+    });
+
+    async function eliminarArticulo(id) {
+      await fetch(`${apiBase}/articulos/${id}`, { method: 'DELETE' });
+      cargarArticulos();
+    }
+
+    // ===================== CATEGORÍAS =====================
+    const tablaCategorias = document.querySelector('#tabla-categorias tbody');
+    async function cargarCategorias() {
+      const res = await fetch(`${apiBase}/categorias`);
+      const datos = await res.json();
+      tablaCategorias.innerHTML = datos.map(c => `
+        <tr>
+          <td>${c.nombre}</td>
+          <td><button onclick="eliminarCategoria('${c._id}')" class='delete'>🗑</button></td>
+        </tr>`).join('');
+    }
+
+    document.querySelector('#form-categoria').addEventListener('submit', async e => {
+      e.preventDefault();
+      await fetch(`${apiBase}/categorias`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombre: nombreCat.value })
+      });
+      e.target.reset();
+      cargarCategorias();
+    });
+
+    async function eliminarCategoria(id) {
+      await fetch(`${apiBase}/categorias/${id}`, { method: 'DELETE' });
+      cargarCategorias();
+    }
+
+    // ===================== ALMACÉN =====================
+    const tablaAlmacen = document.querySelector('#tabla-almacen tbody');
+    async function cargarAlmacen() {
+      const res = await fetch(`${apiBase}/almacen`);
+      const datos = await res.json();
+      tablaAlmacen.innerHTML = datos.map(r => `
+        <tr>
+          <td>${r.articulo_id}</td>
+          <td>${r.categoria_id}</td>
+          <td>${r.stock}</td>
+          <td>${r.ubicacion}</td>
+          <td><button onclick="eliminarAlmacen('${r._id}')" class='delete'>🗑</button></td>
+        </tr>`).join('');
+    }
+
+    document.querySelector('#form-almacen').addEventListener('submit', async e => {
+      e.preventDefault();
+      const data = {
+        articulo_id: articuloId.value,
+        categoria_id: categoriaId.value,
+        stock: parseInt(stock.value),
+        ubicacion: ubicacion.value
+      };
+      await fetch(`${apiBase}/almacen`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      e.target.reset();
+      cargarAlmacen();
+    });
+
+    async function eliminarAlmacen(id) {
+      await fetch(`${apiBase}/almacen/${id}`, { method: 'DELETE' });
+      cargarAlmacen();
+    }
+
+    // Inicializar
+    cargarArticulos();
+    cargarCategorias();
+    cargarAlmacen();
+  </script>
+</body>
+</html>

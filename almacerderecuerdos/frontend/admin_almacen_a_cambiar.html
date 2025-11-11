@@ -1,0 +1,19 @@
+En tu archivo admin_almacen.html, cambia las operaciones locales por fetch() hacia la API:
+
+js
+// Ejemplo: obtener artículos
+async function cargarArticulos() {
+  const res = await fetch("http://localhost:4000/api/articulos");
+  const articulos = await res.json();
+  mostrarArticulos(articulos);
+}
+
+// Crear nuevo artículo
+async function crearArticulo(data) {
+  await fetch("http://localhost:4000/api/articulos", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  });
+  cargarArticulos();
+}

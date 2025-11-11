@@ -1,0 +1,16 @@
+almacen_recuerdos/
+│
+├── backend/
+│   ├── server.js
+│   ├── routes/
+│   │   ├── articulos.js
+│   │   ├── categorias.js
+│   │   └── almacen.js
+│   ├── models/
+│   │   ├── Articulo.js
+│   │   ├── Categoria.js
+│   │   └── Almacen.js
+│   └── seed.js
+│
+└── frontend/
+    └── admin_almacen.html   (el que ya tienes)
