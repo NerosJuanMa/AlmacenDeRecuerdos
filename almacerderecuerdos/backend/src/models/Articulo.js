@@ -10,5 +10,8 @@ const articuloSchema = new mongoose.Schema({
   estado: String,
   color: String
 });
+// 2) Crear el modelo (puente con la colección)
+const Articulo = mongoose.model('Articulo', articuloSchema, Articulos);
 
-export default mongoose.model("Articulo", articuloSchema);
+// Creamos el modelo a partir del esquema
+export default mongoose.model("Articulo", articuloSchema, Articulos);
