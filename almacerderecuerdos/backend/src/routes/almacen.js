@@ -1,62 +1,19 @@
-import express from "express";
-import Almacen from "./models/Almacen.js";
+import express from 'express';
+//import { Router } from 'express';
 
-const router = express.Router();
+// 🔹 Creamos un "enrutador" de Express
+const route = express.Router();
 
-// Crear nueva entrada en almacén
-router.post("/", async (req, res) => {
-  try {
-    const registro = new Almacen(req.body);
-    await registro.save();
-    res.json(registro);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+// 🔹 Importamos el controlador (lógica de los almacen)
+import almacenController from '../controllers/almacen.controller.js';
 
-// Leer todos los registros del almacén (con joins)
-router.get("/", async (req, res) => {
-  try {
-    const registros = await Almacen.find()
-      .populate("articulo_id", "nombre precio")
-      .populate("categoria_id", "nombre");
-    res.json(registros);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+// 🔹 Definimos las rutas básicas del recurso "almacen"
+route.get('/', almacenController.listarAlmacen);         // obtener todos los almacen
+route.post('/', almacenController.crearAlmacen);        // crear un nuevo almacen
+route.get('/:id', almacenController.obtenerAlmacen);      // obtener un almacen por ID
+route.put('/:id', almacenController.actualizarAlmacen);      // actualizar un almacen
+route.delete('/:id', almacenController.eliminarAlmacen);   // eliminar un almacen
 
-// Leer un registro por ID
-router.get("/:id", async (req, res) => {
-  try {
-    const registro = await Almacen.findById(req.params.id)
-      .populate("articulo_id", "nombre precio")
-      .populate("categoria_id", "nombre");
-    if (!registro) return res.status(404).json({ message: "Registro no encontrado" });
-    res.json(registro);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
 
-// Actualizar un registro
-router.put("/:id", async (req, res) => {
-  try {
-    const actualizado = await Almacen.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    res.json(actualizado);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// Eliminar un registro
-router.delete("/:id", async (req, res) => {
-  try {
-    await Almacen.findByIdAndDelete(req.params.id);
-    res.json({ message: "Registro eliminado" });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-export default router;
+// 🔹 Exportamos el router para poder usarlo en el servidor
+export default route;

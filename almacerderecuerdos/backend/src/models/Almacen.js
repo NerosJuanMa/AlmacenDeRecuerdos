@@ -7,7 +7,6 @@ const almacenSchema = new mongoose.Schema({
   ubicacion: String
 });
 // 2) Crear el modelo (puente con la colección)
-const Almacen = mongoose.model('Almacen', almacenSchema);
+const Almacen = mongoose.model('Almacen', almacenSchema, "almacen");
 
-// Creamos el modelo a partir del esquema
-export default mongoose.model("Almacen", almacenSchema);
+export default Almacen;

@@ -1,58 +1,19 @@
-import express from "express";
-import Categoria from "./models/Categoria.js";
+import express from 'express';
+//import { Router } from 'express';
 
-const router = express.Router();
+// 🔹 Creamos un "enrutador" de Express
+const route = express.Router();
 
-// Crear nueva categoría
-router.post("/", async (req, res) => {
-  try {
-    const categoria = new Categoria(req.body);
-    await categoria.save();
-    res.json(categoria);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+// 🔹 Importamos el controlador (lógica de los categorias)
+import categoriasController from '../controllers/categorias.controller.js';
 
-// Leer todas las categorías
-router.get("/", async (req, res) => {
-  try {
-    const categorias = await Categoria.find();
-    res.json(categorias);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+// 🔹 Definimos las rutas básicas del recurso "categorias"
+route.get('/', categoriasController.listarCategorias);         // obtener todos los categorias
+route.post('/', categoriasController.crearCategoria);        // crear un nuevo categorias
+route.get('/:id', categoriasController.obtenerCategoria);      // obtener un categorias por ID
+route.put('/:id', categoriasController.actualizarCategoria);      // actualizar un categorias
+route.delete('/:id', categoriasController.eliminarCategoria);   // eliminar un categorias
 
-// Leer una categoría por ID
-router.get("/:id", async (req, res) => {
-  try {
-    const categoria = await Categoria.findById(req.params.id);
-    if (!categoria) return res.status(404).json({ message: "Categoría no encontrada" });
-    res.json(categoria);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
 
-// Actualizar una categoría
-router.put("/:id", async (req, res) => {
-  try {
-    const actualizada = await Categoria.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    res.json(actualizada);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// Eliminar una categoría
-router.delete("/:id", async (req, res) => {
-  try {
-    await Categoria.findByIdAndDelete(req.params.id);
-    res.json({ message: "Categoría eliminada" });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-export default router;
+// 🔹 Exportamos el router para poder usarlo en el servidor
+export default route;

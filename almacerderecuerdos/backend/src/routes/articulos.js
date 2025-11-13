@@ -1,30 +1,19 @@
-import express from "express";
-import Articulo from "./models/Articulo.js";
-const router = express.Router();
+import express from 'express';
+//import { Router } from 'express';
 
-// Crear
-router.post("/", async (req, res) => {
-  const articulo = new Articulo(req.body);
-  await articulo.save();
-  res.json(articulo);
-});
+// 🔹 Creamos un "enrutador" de Express
+const route = express.Router();
 
-// Leer todos
-router.get("/", async (req, res) => {
-  res.json(await Articulo.find());
-});
+// 🔹 Importamos el controlador (lógica de los articulos)
+import articulosController from '../controllers/articulos.controller.js';
 
-// Actualizar
-router.put("/:id", async (req, res) => {
-  const actualizado = await Articulo.findByIdAndUpdate(req.params.id, req.body, { new: true });
-  res.json(actualizado);
-});
+// 🔹 Definimos las rutas básicas del recurso "articulos"
+route.get('/', articulosController.listarArticulos);         // obtener todos los articulos
+route.post('/', articulosController.crearArticulo);        // crear un nuevo articulos
+route.get('/:id', articulosController.obtenerArticulo);      // obtener un articulos por ID
+route.put('/:id', articulosController.actualizarArticulo);      // actualizar un articulos
+route.delete('/:id', articulosController.eliminarArticulo);   // eliminar un articulos
 
-// Eliminar
-router.delete("/:id", async (req, res) => {
-  await Articulo.findByIdAndDelete(req.params.id);
-  res.json({ message: "Artículo eliminado" });
-});
 
-export default router;
-//(Las rutas de categorias.js y almacen.js son iguales, cambiando el modelo.)
+// 🔹 Exportamos el router para poder usarlo en el servidor
+export default route;

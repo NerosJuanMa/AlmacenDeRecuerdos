@@ -5,7 +5,6 @@ const categoriaSchema = new mongoose.Schema({
   imagen: String
 });
 // 2) Crear el modelo (puente con la colección)
-const Categoria = mongoose.model('Categoria', categoriaSchema);
+const Categoria = mongoose.model('Categoria', categoriaSchema, "categorias");
 
-// Creamos el modelo a partir del esquema
-export default mongoose.model("Categoria", categoriaSchema);
+export default Categoria;

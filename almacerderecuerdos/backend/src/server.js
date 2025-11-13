@@ -6,9 +6,9 @@ import { connectDB } from './config/db.js';
 //Revisar lo que sigue:
 // import mongoose from "mongoose";
 // import bodyParser from "body-parser";
-import articulosRoutes from "./routes/articulos.js";
-import categoriasRoutes from "./routes/categorias.js";
-import almacenRoutes from "./routes/almacen.js";
+import articulosRoutes from './routes/articulos.js';
+import categoriasRoutes from './routes/categorias.js';
+import almacenRoutes from './routes/almacen.js';
 
 // 🔹 Cargar variables del archivo .env
 dotenv.config();
@@ -41,17 +41,3 @@ try {
 
 
 //app.use(bodyParser.json());
-
-
-
-// Conexión a MongoDB Atlas
-// mongoose
-//   .connect(process.env.MONGO_URI)
-//   .then(() => {
-//     console.log("✅ Conectado a MongoDB Atlas");
-//     app.listen(process.env.PORT || 4000, () =>
-//       console.log(`🚀 Servidor en puerto ${process.env.PORT || 4000}`)
-//     );
-//   })
-//   .catch((err) => console.error("❌ Error al conectar:", err));
-  
