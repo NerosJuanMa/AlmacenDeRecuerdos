@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import productosRoutes from './routes/productos.routes.js';//importamos las rutas de productos
+import pedidosRoutes from './routes/pedidos.routes.js';//importamos las rutas de productos
 import cors from "cors";
 import { connectDB } from './config/db.js';
 //Revisar lo que sigue:
@@ -22,6 +23,8 @@ await connectDB();
 
 // ✅ Aquí decides la ruta base
 app.use('/api/productos', productosRoutes);
+app.use('/api/pedidos', pedidosRoutes);
+
 app.use("/api/articulos", articulosRoutes);
 app.use("/api/categorias", categoriasRoutes);
 app.use("/api/almacen", almacenRoutes);

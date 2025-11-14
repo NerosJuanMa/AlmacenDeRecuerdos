@@ -13,6 +13,7 @@ route.get('/', productosController.listarProductos);         // obtener todos lo
 route.post('/', productosController.crearProducto);        // crear un nuevo producto
 route.get('/:id', productosController.obtenerProducto);      // obtener un producto por ID
 route.put('/:id', productosController.actualizarProducto);      // actualizar un producto
+route.patch('/:id', productosController.actualizarCampoProducto);      // actualizar un campo de un producto
 route.delete('/:id', productosController.eliminarProducto);   // eliminar un producto
 
 
