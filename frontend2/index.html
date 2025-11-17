@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Almacén de Recuerdos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>🌟 Mi Almacén de Recuerdos 🌟</h1>
+        <p>Guarda y revive tus momentos más preciados.</p>
+    </header>
+
+    <main>
+        <section id="form-section">
+            <h2>Añadir Nuevo Recuerdo</h2>
+            <form id="recuerdo-form">
+                <input type="text" id="titulo" placeholder="Título del recuerdo" required>
+                <textarea id="contenido" placeholder="Describe tu recuerdo..." required></textarea>
+                <button type="submit">Guardar Recuerdo</button>
+            </form>
+        </section>
+
+        <section id="recuerdos-list-section">
+            <h2>Todos mis Recuerdos</h2>
+            <div id="recuerdos-list">
+                </div>
+            <p id="loading-message">Cargando recuerdos...</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Almacén de Recuerdos - Frontend Simple</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

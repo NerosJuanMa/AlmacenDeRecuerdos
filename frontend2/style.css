@@ -1,0 +1,129 @@
+/* Variables para fácil personalización */
+:root {
+    --primary-color: #4CAF50; /* Verde */
+    --secondary-color: #2c3e50; /* Azul oscuro */
+    --background-color: #34495e; /* Fondo principal */
+    --text-color: #ecf0f1; /* Texto claro */
+    --card-bg: #2c3e50; /* Fondo de tarjeta */
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+header {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 30px 20px;
+    text-align: center;
+    box-shadow: var(--shadow);
+}
+
+h1 {
+    margin-bottom: 5px;
+    font-size: 2.5em;
+}
+
+main {
+    padding: 20px;
+    max-width: 1000px;
+    margin: 20px auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+section {
+    background-color: var(--secondary-color);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    flex: 1 1 45%; /* Permite que las secciones se ajusten al ancho */
+    min-width: 300px;
+}
+
+/* Estilos del Formulario */
+#form-section {
+    order: 1; /* Posiciona primero */
+}
+
+input[type="text"], textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #7f8c8d;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #3b5066;
+    color: var(--text-color);
+    resize: vertical;
+}
+
+button[type="submit"] {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* Estilos de la Lista de Recuerdos */
+#recuerdos-list-section {
+    order: 2; /* Posiciona segundo */
+}
+
+#recuerdos-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.recuerdo-card {
+    background-color: var(--card-bg);
+    border: 2px solid var(--primary-color);
+    padding: 15px;
+    border-radius: 8px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+
+.recuerdo-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.recuerdo-card h3 {
+    margin-top: 0;
+    color: var(--primary-color);
+    border-bottom: 1px solid #4a637d;
+    padding-bottom: 5px;
+}
+
+/* Mensaje de carga/error */
+#loading-message {
+    text-align: center;
+    font-style: italic;
+    padding: 20px;
+}
+
+footer {
+    text-align: center;
+    padding: 15px;
+    margin-top: 20px;
+    background-color: var(--secondary-color);
+    color: #bdc3c7;
+    font-size: 0.9em;
+}

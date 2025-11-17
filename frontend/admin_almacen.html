@@ -12,7 +12,9 @@
 
 <body>
   <header>
-    <h1>Panel de Administración - Almacén Recuerdos</h1>
+    <h1>🌟 Mi Almacén de Recuerdos 🌟</h1>
+    <p>Guarda y revive tus momentos más preciados.</p>
+    <h1>Panel de Administración</h1>
   </header>
   <nav>
     <button id="tab-articulos" class="active">Artículos</button>
@@ -27,21 +29,31 @@
       <input type="number" id="precio" placeholder="Precio">
       <input type="text" id="tamaño" placeholder="Tamaño">
       <input type="text" id="color" placeholder="Color">
+      <input type="text" id="historia_procedencia" placeholder="historia_procedencia">
+      <input type="text" id="disponibilidad" placeholder="disponibilidad">
+      <input type="text" id="imagen" placeholder="imagen">
+      <input type="number" id="estado" placeholder="estado">
       <button type="submit" class="crud">Añadir</button>
     </form>
-    <div id="tabla-articulos"></div>
-    <!-- <table id="tabla-articulos">
+    
+    <div id="tabla-articulos" class="row"></div>
+    
+    <table id="tabla-articulos">
       <thead>
         <tr>
           <th>Nombre</th>
           <th>Precio</th>
           <th>Tamaño</th>
           <th>Color</th>
-          <th>Acciones</th>
+          <th>imagen</th>
+          <th>historia_procedencia</th>
+          <th>disponibilidad</th>
+          <th>estado</th>
+          <th>Acciones</th>         
         </tr>
       </thead>
       <tbody></tbody>
-    </table> -->
+    </table>
   </section>
 
   <section id="categorias">
@@ -83,5 +95,8 @@
       <tbody></tbody>
     </table>
   </section>
+<footer>
+  <p>&copy; 2025 Almacén de Recuerdos - Frontend Simple</p>
+</footer>
 
 </body></html>
