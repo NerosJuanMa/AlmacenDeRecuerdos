@@ -1,0 +1,130 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f5f7;
+  color: #333;
+}
+
+header {
+  text-align: center;
+  padding: 20px;
+  background: #5b76ff;
+  color: white;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  background: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,.1);
+}
+
+nav button {
+  border: none;
+  padding: 12px 25px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 16px;
+  transition: .2s;
+}
+
+nav button.active {
+  background: #5b76ff;
+  color: white;
+}
+
+section {
+  display: none;
+  padding: 20px;
+}
+
+section.active {
+  display: block;
+}
+
+.fade {
+  animation: fadeIn .4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Tablas */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 15px;
+}
+
+th {
+  background: #e9ebff;
+  padding: 10px;
+}
+
+td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+  background: #f7f8ff;
+}
+
+/* Botones */
+.btn {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.btn.add {
+  background: #28c76f;
+  color: white;
+}
+
+.btn.edit {
+  background: #ff9f43;
+  color: white;
+}
+
+.btn.delete {
+  background: #ea5455;
+  color: white;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  width: 400px;
+  position: relative;
+}
+
+#modal-close {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  cursor: pointer;
+  font-size: 20px;
+}

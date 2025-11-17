@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Administración - Almacén Recuerdos</title>
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="styles_ok.css">
+
+  <!-- Toastify -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+  <!-- JS -->
+  <script src="scripts_ok.js" defer></script>
+</head>
+<body>
+
+<header>
+  <h1>✨ Panel de Administración</h1>
+  <p>Gestiona artículos, categorías y almacenamientos fácilmente.</p>
+</header>
+
+<nav>
+  <button data-tab="articulos" class="active">Artículos</button>
+  <button data-tab="categorias">Categorías</button>
+  <button data-tab="almacen">Almacén</button>
+</nav>
+
+<!-- ================= ARTÍCULOS ================= -->
+<section id="articulos" class="active fade">
+  <h2>📦 Gestión de Artículos</h2>
+
+  <button class="btn add" id="btn-add-articulo">➕ Añadir artículo</button>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th><th>Precio</th><th>Tamaño</th><th>Color</th>
+        <th>Imagen</th><th>Historia</th><th>Disponible</th><th>Estado</th><th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="tbody-articulos"></tbody>
+  </table>
+</section>
+
+<!-- ================= CATEGORÍAS ================= -->
+<section id="categorias" class="fade">
+  <h2>🏷️ Categorías</h2>
+
+  <button class="btn add" id="btn-add-cat">➕ Añadir categoría</button>
+
+  <table>
+    <thead><tr><th>Nombre</th><th>Acciones</th></tr></thead>
+    <tbody id="tbody-categorias"></tbody>
+  </table>
+</section>
+
+<!-- ================= ALMACÉN ================= -->
+<section id="almacen" class="fade">
+  <h2>📚 Almacén</h2>
+
+  <button class="btn add" id="btn-add-almacen">➕ Añadir entrada</button>
+
+  <table>
+    <thead><tr><th>Artículo</th><th>Categoría</th><th>Stock</th><th>Ubicación</th><th>Acciones</th></tr></thead>
+    <tbody id="tbody-almacen"></tbody>
+  </table>
+</section>
+
+<!-- ============= MODAL GENÉRICO CRUD ============= -->
+<div id="modal" class="modal hidden">
+  <div class="modal-content fade">
+    <span id="modal-close">&times;</span>
+    <h3 id="modal-title"></h3>
+
+    <form id="modal-form"></form>
+  </div>
+</div>
+
+</body>
+</html>
