@@ -1,155 +1,124 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel de Administración - Almacén Recuerdos</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Panel - Almacén de Recuerdos</title>
+
+  <!-- Toastify -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
   <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  
+  <link rel="stylesheet" href="styles.css" />
   <script src="scripts.js" defer></script>
 </head>
 <body>
-  <header>
-    <h1>🌟 Mi Almacén de Recuerdos 🌟</h1>
-    <p>Guarda y revive tus momentos más preciados.</p>
-    <div class="header-controls">
-      <button id="toggle-dark">🌙 Dark Mode</button>
-    </div>
-    <h1>Panel de Administración</h1>
-  </header>
 
-  <nav>
-    <button id="tab-articulos" class="active">Artículos</button>
-    <button id="tab-categorias">Categorías</button>
-    <button id="tab-almacen">Almacén</button>
-  </nav>
+<header>
+  <div class="header-left">
+    <h1>✨ Almacén de Recuerdos</h1>
+    <p class="muted">Panel de administración</p>
+  </div>
 
-  <!-- ================= ARTÍCULOS ================= -->
+  <div class="header-right">
+    <label class="switch">
+      <input id="dark-toggle" type="checkbox" />
+      <span class="slider">🌙</span>
+      
+    </label>
+    <button id="refresh-all" class="btn small">🔄</button>
+  </div>
+</header>
+
+<nav>
+  <button data-tab="articulos" class="active">Artículos</button>
+  <button data-tab="categorias">Categorías</button>
+  <button data-tab="almacen">Almacén</button>
+</nav>
+
+<main>
+  <!-- ARTICULOS -->
   <section id="articulos" class="active">
-    <h2>Gestión de Artículos</h2>
-    <div class="table-controls">
-      <button class="btn-add" data-target="modal-articulo">➕ Añadir Artículo</button>
-      <button class="btn-columns" data-table="tabla-articulos">⚙ Columnas</button>
+    <div class="toolbar">
+      <div>
+        <button id="btn-add-articulo" class="btn">➕ Añadir</button>
+        <button id="btn-clear-filters-art" class="btn ghost">Limpiar</button>
+      </div>
+      <input id="search-articulos" placeholder="Buscar por nombre, color, estado..." />
     </div>
-    <div class="table-wrapper">
-      <table id="tabla-articulos">
+
+    <div class="table-wrap">
+      <table>
         <thead>
           <tr>
-            <th>Nombre</th>
-            <th>Precio</th>
-            <th>Tamaño</th>
-            <th>Color</th>
-            <th>Imagen</th>
-            <th>Historia</th>
-            <th>Disponibilidad</th>
-            <th>Estado</th>
-            <th>Acciones</th>
+            <th>Nombre</th><th>Precio</th><th>Tamaño</th><th>Color</th>
+            <th>Imagen</th><th>Historia</th><th>Disponible</th><th>Estado</th><th>Acciones</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody id="tbody-articulos"></tbody>
       </table>
-      <div class="loader" id="loader-articulos">Cargando...</div>
     </div>
   </section>
 
-  <!-- ================= CATEGORÍAS ================= -->
+  <!-- CATEGORIAS -->
   <section id="categorias">
-    <h2>Gestión de Categorías</h2>
-    <div class="table-controls">
-      <button class="btn-add" data-target="modal-categoria">➕ Añadir Categoría</button>
-      <button class="btn-columns" data-table="tabla-categorias">⚙ Columnas</button>
+    <div class="toolbar">
+      <div>
+        <button id="btn-add-cat" class="btn">➕ Añadir</button>
+        <button id="btn-clear-filters-cat" class="btn ghost">Limpiar</button>
+      </div>
+      <input id="search-categorias" placeholder="Buscar categoría..." />
     </div>
-    <div class="table-wrapper">
-      <table id="tabla-categorias">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Nombre</th><th>Imagen</th><th>Acciones</th></tr></thead>
+        <tbody id="tbody-categorias"></tbody>
       </table>
-      <div class="loader" id="loader-categorias">Cargando...</div>
     </div>
   </section>
 
-  <!-- ================= ALMACÉN ================= -->
+  <!-- ALMACÉN -->
   <section id="almacen">
-    <h2>Gestión de Almacén</h2>
-    <div class="table-controls">
-      <button class="btn-add" data-target="modal-almacen">➕ Añadir Registro</button>
-      <button class="btn-columns" data-table="tabla-almacen">⚙ Columnas</button>
+    <div class="toolbar">
+      <div>
+        <button id="btn-add-almacen" class="btn">➕ Añadir</button>
+        <button id="btn-clear-filters-alm" class="btn ghost">Limpiar</button>
+      </div>
+      <input id="search-almacen" placeholder="Buscar por artículo, categoría, ubicación..." />
     </div>
-    <div class="table-wrapper">
-      <table id="tabla-almacen">
-        <thead>
-          <tr>
-            <th>Artículo</th>
-            <th>Categoría</th>
-            <th>Stock</th>
-            <th>Ubicación</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Artículo</th><th>Categoría</th><th>Stock</th><th>Ubicación</th><th>Acciones</th></tr></thead>
+        <tbody id="tbody-almacen"></tbody>
       </table>
-      <div class="loader" id="loader-almacen">Cargando...</div>
     </div>
   </section>
-
+</main>
   <footer>
-    <p>&copy; 2025 Almacén de Recuerdos - Panel Moderno</p>
+    <p>&copy; 2025 Almacén de Recuerdos - Juan Manuel Mudarra Pozo</p>
   </footer>
 
-  <!-- ================= MODALES ================= -->
-  <div class="modal" id="modal-articulo">
-    <div class="modal-content">
-      <h3>Añadir Artículo</h3>
-      <form id="form-articulo">
-        <input type="text" id="nombre" placeholder="Nombre" required>
-        <input type="number" id="precio" placeholder="Precio">
-        <input type="text" id="tamaño" placeholder="Tamaño">
-        <input type="text" id="color" placeholder="Color">
-        <input type="text" id="historia_procedencia" placeholder="Historia / Procedencia">
-        <input type="text" id="disponibilidad" placeholder="Disponibilidad">
-        <input type="text" id="imagen" placeholder="URL Imagen">
-        <input type="text" id="estado" placeholder="Estado">
-        <div class="modal-buttons">
-          <button type="submit">Guardar</button>
-          <button type="button" class="btn-cancel">Cancelar</button>
-        </div>
-      </form>
-    </div>
+<!-- Modal genérico (formulario) -->
+<div id="modal" class="modal hidden" aria-hidden="true">
+  <div class="modal-card">
+    <button id="modal-close" class="modal-close">×</button>
+    <h3 id="modal-title"></h3>
+    <form id="modal-form"></form>
   </div>
+</div>
 
-  <div class="modal" id="modal-categoria">
-    <div class="modal-content">
-      <h3>Añadir Categoría</h3>
-      <form id="form-categoria">
-        <input type="text" id="nombreCat" placeholder="Nombre" required>
-        <div class="modal-buttons">
-          <button type="submit">Guardar</button>
-          <button type="button" class="btn-cancel">Cancelar</button>
-        </div>
-      </form>
+<!-- Confirm modal -->
+<div id="confirm-modal" class="modal hidden" aria-hidden="true">
+  <div class="modal-card">
+    <h3>Confirmar eliminación</h3>
+    <p id="confirm-text">¿Seguro que quieres eliminar esto?</p>
+    <div class="confirm-actions">
+      <button id="confirm-cancel" class="btn ghost">Cancelar</button>
+      <button id="confirm-accept" class="btn delete">Eliminar</button>
     </div>
   </div>
-
-  <div class="modal" id="modal-almacen">
-    <div class="modal-content">
-      <h3>Añadir Registro Almacén</h3>
-      <form id="form-almacen">
-        <input type="text" id="articuloId" placeholder="Artículo (auto-complete)" required>
-        <input type="text" id="categoriaId" placeholder="Categoría (auto-complete)" required>
-        <input type="number" id="stock" placeholder="Stock" required>
-        <input type="text" id="ubicacion" placeholder="Ubicación">
-        <div class="modal-buttons">
-          <button type="submit">Guardar</button>
-          <button type="button" class="btn-cancel">Cancelar</button>
-        </div>
-      </form>
-    </div>
-  </div>
+</div>
 </body>
 </html>

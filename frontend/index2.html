@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Administración - Almacén Recuerdos</title>
+  <link rel="stylesheet" href="styles2.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <script src="scripts2.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>🌟 Mi Almacén de Recuerdos 🌟</h1>
+    <p>Guarda y revive tus momentos más preciados.</p>
+    <div class="header-controls">
+      <button id="toggle-dark">🌙 Dark Mode</button>
+    </div>
+    <h1>Panel de Administración</h1>
+  </header>
+
+  <nav>
+    <button id="tab-articulos" class="active">Artículos</button>
+    <button id="tab-categorias">Categorías</button>
+    <button id="tab-almacen">Almacén</button>
+  </nav>
+
+  <!-- ================= ARTÍCULOS ================= -->
+  <section id="articulos" class="active">
+    <h2>Gestión de Artículos</h2>
+    <div class="table-controls">
+      <button class="btn-add" data-target="modal-articulo">➕ Añadir Artículo</button>
+      <button class="btn-columns" data-table="tabla-articulos">⚙ Columnas</button>
+    </div>
+    <div class="table-wrapper">
+      <table id="tabla-articulos">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Tamaño</th>
+            <th>Color</th>
+            <th>Imagen</th>
+            <th>Historia</th>
+            <th>Disponibilidad</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div class="loader" id="loader-articulos">Cargando...</div>
+    </div>
+  </section>
+
+  <!-- ================= CATEGORÍAS ================= -->
+  <section id="categorias">
+    <h2>Gestión de Categorías</h2>
+    <div class="table-controls">
+      <button class="btn-add" data-target="modal-categoria">➕ Añadir Categoría</button>
+      <button class="btn-columns" data-table="tabla-categorias">⚙ Columnas</button>
+    </div>
+    <div class="table-wrapper">
+      <table id="tabla-categorias">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div class="loader" id="loader-categorias">Cargando...</div>
+    </div>
+  </section>
+
+  <!-- ================= ALMACÉN ================= -->
+  <section id="almacen">
+    <h2>Gestión de Almacén</h2>
+    <div class="table-controls">
+      <button class="btn-add" data-target="modal-almacen">➕ Añadir Registro</button>
+      <button class="btn-columns" data-table="tabla-almacen">⚙ Columnas</button>
+    </div>
+    <div class="table-wrapper">
+      <table id="tabla-almacen">
+        <thead>
+          <tr>
+            <th>Artículo</th>
+            <th>Categoría</th>
+            <th>Stock</th>
+            <th>Ubicación</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div class="loader" id="loader-almacen">Cargando...</div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Almacén de Recuerdos - Panel Moderno</p>
+  </footer>
+
+  <!-- ================= MODALES ================= -->
+  <div class="modal" id="modal-articulo">
+    <div class="modal-content">
+      <h3>Añadir Artículo</h3>
+      <form id="form-articulo">
+        <input type="text" id="nombre" placeholder="Nombre" required>
+        <input type="number" id="precio" placeholder="Precio">
+        <input type="text" id="tamaño" placeholder="Tamaño">
+        <input type="text" id="color" placeholder="Color">
+        <input type="text" id="historia_procedencia" placeholder="Historia / Procedencia">
+        <input type="text" id="disponibilidad" placeholder="Disponibilidad">
+        <input type="text" id="imagen" placeholder="URL Imagen">
+        <input type="text" id="estado" placeholder="Estado">
+        <div class="modal-buttons">
+          <button type="submit">Guardar</button>
+          <button type="button" class="btn-cancel">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal" id="modal-categoria">
+    <div class="modal-content">
+      <h3>Añadir Categoría</h3>
+      <form id="form-categoria">
+        <input type="text" id="nombreCat" placeholder="Nombre" required>
+        <div class="modal-buttons">
+          <button type="submit">Guardar</button>
+          <button type="button" class="btn-cancel">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal" id="modal-almacen">
+    <div class="modal-content">
+      <h3>Añadir Registro Almacén</h3>
+      <form id="form-almacen">
+        <input type="text" id="articuloId" placeholder="Artículo (auto-complete)" required>
+        <input type="text" id="categoriaId" placeholder="Categoría (auto-complete)" required>
+        <input type="number" id="stock" placeholder="Stock" required>
+        <input type="text" id="ubicacion" placeholder="Ubicación">
+        <div class="modal-buttons">
+          <button type="submit">Guardar</button>
+          <button type="button" class="btn-cancel">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
