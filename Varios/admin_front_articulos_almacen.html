@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin - Artículos / Categorías / Almacén</title>
+  <style>
+    :root{--bg:#f6f7fb;--card:#ffffff;--muted:#6b7280;--accent:#0b74de}
+    *{box-sizing:border-box;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif}
+    body{margin:0;background:var(--bg);color:#111}
+    header{background:linear-gradient(90deg,#fff 0,#eef6ff);padding:18px 22px;border-bottom:1px solid #e6edf6;display:flex;align-items:center;justify-content:space-between}
+    header h1{margin:0;font-size:18px}
+    .container{max-width:1100px;margin:22px auto;padding:0 16px}
+    .grid{display:grid;grid-template-columns:1fr 360px;gap:18px}
+    .card{background:var(--card);padding:16px;border-radius:10px;box-shadow:0 6px 18px rgba(14,20,30,0.04)}
+    .tabs{display:flex;gap:8px}
+    .tab{padding:8px 12px;border-radius:8px;cursor:pointer;background:transparent;border:1px solid transparent}
+    .tab.active{background:var(--accent);color:#fff}
+    .list{max-height:520px;overflow:auto;margin-top:12px}
+    .item{display:flex;align-items:center;justify-content:space-between;padding:10px 8px;border-radius:8px;border:1px solid #eef2f7;margin-bottom:8px}
+    .meta{display:flex;gap:12px;align-items:center}
+    .avatar{width:48px;height:48px;border-radius:6px;background:#f2f6fb;display:inline-flex;align-items:center;justify-content:center;color:var(--muted);font-weight:700}
+    button{cursor:pointer}
+    .btn{padding:8px 10px;border-radius:8px;border:0;background:var(--accent);color:#fff}
+    .btn.ghost{background:transparent;border:1px solid #e3e8f0;color:var(--muted)}
+    form{display:flex;flex-direction:column;gap:8px}
+    label{font-size:13px;color:var(--muted)}
+    input[type=text], input[type=number], textarea, select{padding:8px;border-radius:8px;border:1px solid #e6edf6;background:#fff}
+    textarea{min-height:80px}
+    .row{display:flex;gap:8px}
+    .small{font-size:13px;color:var(--muted)}
+    footer{margin-top:12px;text-align:center;color:var(--muted);font-size:13px}
+    .actions{display:flex;gap:6px}
+    .pill{padding:6px 8px;border-radius:999px;border:1px solid #edf2f7;background:#fff;font-size:13px}
+    .search{width:100%;padding:8px;border-radius:8px;border:1px solid #e6edf6}
+    .badge{background:#eef6ff;color:var(--accent);padding:4px 8px;border-radius:999px;font-size:12px}
+    .danger{background:#fff3f3;border:1px solid #ffd6d6;color:#a42828}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Admin — Artículos · Categorías · Almacén</h1>
+    <div style="display:flex;gap:10px;align-items:center">
+      <div class="small">Modo: <strong>Demo local</strong></div>
+      <button class="btn" id="exportBtn">Exportar JSON</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="grid">
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div class="tabs">
+              <div class="tab active" data-target="articulos">Artículos</div>
+              <div class="tab" data-target="categorias">Categorías</div>
+              <div class="tab" data-target="almacen">Almacén</div>
+            </div>
+            <div class="small">Administra los registros. En la demo todo se guarda en <code>localStorage</code>.</div>
+          </div>
+          <div class="row">
+            <input id="search" class="search" placeholder="Buscar..." />
+            <button class="btn" id="newBtn">Nuevo</button>
+          </div>
+        </div>
+
+        <div id="views">
+          <!-- Artículos -->
+          <div class="view" id="articulosView">
+            <div class="list" id="articuloList"></div>
+          </div>
+
+          <!-- Categorías -->
+          <div class="view" id="categoriasView" style="display:none">
+            <div class="list" id="categoriaList"></div>
+          </div>
+
+          <!-- Almacén -->
+          <div class="view" id="almacenView" style="display:none">
+            <div class="list" id="almacenList"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="card">
+        <div id="editorArea">
+          <h3 id="editorTitle">Selecciona o crea un registro</h3>
+          <div id="editorForm"></div>
+        </div>
+
+        <footer>
+          <div>Demo creada automáticamente — guarda, edita, elimina y exporta tus datos.</div>
+        </footer>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /*************************************************************************
+     * Datos de ejemplo (se cargan la primera vez en localStorage)
+     * NOTA: los _id están escritos como strings; en tu backend usarías ObjectId
+     *************************************************************************/
+    const SAMPLE = {
+      categorias: [
+        { _id: '69132bd2bb4321e98363b114', nombre: 'menaje_cocina', imagen: null },
+        { _id: '69132bd2bb4321e98363b115', nombre: 'ropa_hombre', imagen: null },
+        { _id: '69132bd2bb4321e98363b116', nombre: 'ropa_mujer', imagen: null },
+        { _id: '69132bd2bb4321e98363b117', nombre: 'decoracion', imagen: null },
+        { _id: '69132bd2bb4321e98363b118', nombre: 'muebles', imagen: null },
+        { _id: '69132bd2bb4321e98363b119', nombre: 'libros', imagen: null },
+        { _id: '69132bd2bb4321e98363b11a', nombre: 'cristaleria', imagen: null },
+        { _id: '69132bd2bb4321e98363b11b', nombre: 'herramientas', imagen: null },
+        { _id: '69132bd2bb4321e98363b11c', nombre: 'otros', imagen: null }
+      ],
+      articulos: [
+        { _id: '69132dcdbb4321e98363b11d', nombre: 'Taza de cerámica artesanal', imagen: 'https://example.com/imagenes/taza_ceramica.jpg', precio: 9.99, tamaño: '350 ml', historia_procedencia: 'Hecha a mano por artesanos locales en Granada, España.', disponibilidad: true, estado: 'Nuevo', color: 'Blanco con detalles azules' },
+        { _id: '69132dcdbb4321e98363b11e', nombre: 'Camisa de lino para hombre', imagen: 'https://example.com/imagenes/camisa_lino.jpg', precio: 29.95, tamaño: 'L', historia_procedencia: 'Fabricada en Portugal con lino 100% natural.', disponibilidad: true, estado: 'Nuevo', color: 'Beige' },
+        { _id: '69132dcdbb4321e98363b11f', nombre: 'Lámpara de mesa vintage', imagen: 'https://example.com/imagenes/lampara_vintage.jpg', precio: 45.00, tamaño: '40 cm alto', historia_procedencia: 'Rescatada y restaurada de una tienda de antigüedades en París.', disponibilidad: true, estado: 'Restaurado', color: 'Cobre envejecido' },
+        { _id: '69132dcdbb4321e98363b120', nombre: 'Estantería de madera reciclada', imagen: 'https://example.com/imagenes/estanteria_madera.jpg', precio: 120.00, tamaño: '120x80x30 cm', historia_procedencia: 'Construida con tablones recuperados de antiguas casas rurales.', disponibilidad: false, estado: 'Nuevo', color: 'Madera natural' },
+        { _id: '69132dcdbb4321e98363b121', nombre: 'Libro antiguo de poesía española', imagen: 'https://example.com/imagenes/libro_poesia.jpg', precio: 25.50, tamaño: '21x14 cm', historia_procedencia: 'Edición de 1923, encontrada en una biblioteca privada en Salamanca.', disponibilidad: true, estado: 'Usado', color: 'Tapa marrón' },
+        { _id: '69132dcdbb4321e98363b122', nombre: 'Juego de copas de cristal tallado', imagen: 'https://example.com/imagenes/copas_cristal.jpg', precio: 39.90, tamaño: '6 unidades - 250 ml cada una', historia_procedencia: 'Fabricadas artesanalmente en Bohemia.', disponibilidad: true, estado: 'Nuevo', color: 'Transparente' },
+        { _id: '69132dcdbb4321e98363b123', nombre: 'Martillo de carpintero profesional', imagen: 'https://example.com/imagenes/martillo.jpg', precio: 15.75, tamaño: '30 cm largo', historia_procedencia: 'Herramienta de alta calidad de fabricación alemana.', disponibilidad: true, estado: 'Nuevo', color: 'Negro y plateado' },
+        { _id: '69132dcdbb4321e98363b124', nombre: 'Cuadro decorativo abstracto', imagen: 'https://example.com/imagenes/cuadro_abstracto.jpg', precio: 85.00, tamaño: '100x70 cm', historia_procedencia: 'Obra original de artista contemporáneo local.', disponibilidad: true, estado: 'Nuevo', color: 'Multicolor' }
+      ],
+      almacen: [
+        { _id: 'alm-1', articulo_id: '69132dcdbb4321e98363b11d', categoria_id: '69132bd2bb4321e98363b114', stock: 25, ubicacion: 'Pasillo A - Estante 3' },
+        { _id: 'alm-2', articulo_id: '69132dcdbb4321e98363b11e', categoria_id: '69132bd2bb4321e98363b115', stock: 40, ubicacion: 'Pasillo C - Perchero 2' },
+        { _id: 'alm-3', articulo_id: '69132dcdbb4321e98363b11f', categoria_id: '69132bd2bb4321e98363b117', stock: 12, ubicacion: 'Pasillo D - Estante 1' },
+        { _id: 'alm-4', articulo_id: '69132dcdbb4321e98363b120', categoria_id: '69132bd2bb4321e98363b118', stock: 5, ubicacion: 'Pasillo F - Zona Grandes Volúmenes' },
+        { _id: 'alm-5', articulo_id: '69132dcdbb4321e98363b121', categoria_id: '69132bd2bb4321e98363b119', stock: 10, ubicacion: 'Pasillo B - Estante 7' },
+        { _id: 'alm-6', articulo_id: '69132dcdbb4321e98363b122', categoria_id: '69132bd2bb4321e98363b11a', stock: 18, ubicacion: 'Pasillo A - Estante 1' },
+        { _id: 'alm-7', articulo_id: '69132dcdbb4321e98363b123', categoria_id: '69132bd2bb4321e98363b11b', stock: 30, ubicacion: 'Pasillo E - Cajón 4' },
+        { _id: 'alm-8', articulo_id: '69132dcdbb4321e98363b124', categoria_id: '69132bd2bb4321e98363b117', stock: 8, ubicacion: 'Pasillo D - Estante 2' }
+      ]
+    }
+
+    // ---------- helpers ----------
+    const DB_KEY = 'demo_almacen_v1'
+    function load() {
+      const raw = localStorage.getItem(DB_KEY)
+      if (!raw) { localStorage.setItem(DB_KEY, JSON.stringify(SAMPLE)); return JSON.parse(localStorage.getItem(DB_KEY)) }
+      return JSON.parse(raw)
+    }
+    function save(db){ localStorage.setItem(DB_KEY, JSON.stringify(db)) }
+    function uid(prefix='id'){return prefix + '-' + Math.random().toString(36).slice(2,11)}
+
+    // ---------- state ----------
+    let DB = load()
+    let currentView = 'articulos'
+    let currentEdit = null // { type:'articulo'|'categoria'|'almacen', id: '...' }
+
+    // ---------- renderers ----------
+    const articuloList = document.getElementById('articuloList')
+    const categoriaList = document.getElementById('categoriaList')
+    const almacenList = document.getElementById('almacenList')
+    const editorForm = document.getElementById('editorForm')
+    const editorTitle = document.getElementById('editorTitle')
+
+    function render(){ renderArticulos(); renderCategorias(); renderAlmacen(); }
+
+    function renderArticulos(){
+      articuloList.innerHTML=''
+      const q = document.getElementById('search').value.toLowerCase()
+      DB.articulos.filter(a=>a.nombre.toLowerCase().includes(q) || (a.color||'').toLowerCase().includes(q)).forEach(a=>{
+        const div = document.createElement('div'); div.className='item'
+        div.innerHTML = `<div class="meta"><div class="avatar">${(a.nombre||'?').slice(0,2).toUpperCase()}</div><div><div><strong>${a.nombre}</strong></div><div class="small">${a.tamaño || ''} · ${a.estado || ''}</div></div></div>
+          <div class="actions">
+            <span class="pill">${a.disponibilidad? 'En stock':'Agotado'}</span>
+            <button class="btn ghost" data-action="edit" data-id="${a._id}">Editar</button>
+            <button class="btn danger" data-action="delete" data-id="${a._id}">Eliminar</button>
+          </div>`
+        articuloList.appendChild(div)
+      })
+    }
+
+    function renderCategorias(){
+      categoriaList.innerHTML=''
+      const q = document.getElementById('search').value.toLowerCase()
+      DB.categorias.filter(c=>c.nombre.toLowerCase().includes(q)).forEach(c=>{
+        const div = document.createElement('div'); div.className='item'
+        div.innerHTML = `<div class="meta"><div class="avatar">C</div><div><div><strong>${c.nombre}</strong></div></div></div>
+          <div class="actions">
+            <button class="btn ghost" data-action="editCat" data-id="${c._id}">Editar</button>
+            <button class="btn danger" data-action="delCat" data-id="${c._id}">Eliminar</button>
+          </div>`
+        categoriaList.appendChild(div)
+      })
+    }
+
+    function renderAlmacen(){
+      almacenList.innerHTML=''
+      const q = document.getElementById('search').value.toLowerCase()
+      DB.almacen.filter(r=>{
+        const art = DB.articulos.find(a=>a._id===r.articulo_id)
+        return (art && art.nombre.toLowerCase().includes(q)) || (r.ubicacion||'').toLowerCase().includes(q)
+      }).forEach(r=>{
+        const art = DB.articulos.find(a=>a._id===r.articulo_id) || {nombre:'(sin artículo)'}
+        const cat = DB.categorias.find(c=>c._id===r.categoria_id) || {nombre:'(sin categoría)'}
+        const div = document.createElement('div'); div.className='item'
+        div.innerHTML = `<div class="meta"><div class="avatar">A</div><div><div><strong>${art.nombre}</strong></div><div class="small">${cat.nombre} · ${r.ubicacion}</div></div></div>
+          <div class="actions">
+            <span class="badge">Stock: ${r.stock}</span>
+            <button class="btn ghost" data-action="editAlm" data-id="${r._id}">Editar</button>
+            <button class="btn danger" data-action="delAlm" data-id="${r._id}">Eliminar</button>
+          </div>`
+        almacenList.appendChild(div)
+      })
+    }
+
+    // ---------- editor UI ----------
+    function openEditor(type,id=null){
+      currentEdit = id ? {type, id} : {type, id: null}
+      editorForm.innerHTML=''
+      editorTitle.textContent = id ? `Editar ${type}` : `Nuevo ${type}`
+
+      if(type==='articulos'){
+        const model = id ? DB.articulos.find(x=>x._id===id) : { nombre:'', imagen:'', precio:'', tamaño:'', historia_procedencia:'', disponibilidad:true, estado:'', color:'' }
+        editorForm.innerHTML = formHTML([['nombre','text',model.nombre],['imagen','text',model.imagen],['precio','number',model.precio],['tamaño','text',model.tamaño],['historia_procedencia','text',model.historia_procedencia],['disponibilidad','select',model.disponibilidad],['estado','text',model.estado],['color','text',model.color]])
+      }
+      if(type==='categorias'){
+        const model = id ? DB.categorias.find(x=>x._id===id) : { nombre:'', imagen:null }
+        editorForm.innerHTML = formHTML([['nombre','text',model.nombre]])
+      }
+      if(type==='almacen'){
+        const model = id ? DB.almacen.find(x=>x._id===id) : { articulo_id:DB.articulos[0] ? DB.articulos[0]._id : '', categoria_id:DB.categorias[0]?DB.categorias[0]._id:'', stock:0, ubicacion:'' }
+        // build select of articulos & categorias
+        let artOptions = DB.articulos.map(a=>`<option value="${a._id}" ${a._id===model.articulo_id?'selected':''}>${a.nombre}</option>`).join('')
+        let catOptions = DB.categorias.map(c=>`<option value="${c._id}" ${c._id===model.categoria_id?'selected':''}>${c.nombre}</option>`).join('')
+        editorForm.innerHTML = `
+          <label>Artículo<select id="field_articulo_id">${artOptions}</select></label>
+          <label>Categoría<select id="field_categoria_id">${catOptions}</select></label>
+          <label>Stock<input id="field_stock" type="number" value="${model.stock||0}" /></label>
+          <label>Ubicación<input id="field_ubicacion" type="text" value="${model.ubicacion||''}" /></label>
+          <div style="display:flex;gap:8px;margin-top:8px"><button class="btn" id="saveBtn">Guardar</button><button class="btn ghost" id="cancelBtn">Cancelar</button></div>
+        `
+      }
+
+      // attach listeners for generic forms
+      const saveBtn = document.getElementById('saveBtn')
+      if(saveBtn){ saveBtn.addEventListener('click', ()=>{ saveCurrent() }) }
+      const cancelBtn = document.getElementById('cancelBtn')
+      if(cancelBtn){ cancelBtn.addEventListener('click', ()=>{ editorForm.innerHTML=''; currentEdit=null; editorTitle.textContent='Selecciona o crea un registro' }) }
+    }
+
+    function formHTML(fields){
+      return fields.map(f=>{
+        if(f[1]==='select'){
+          return `<label>${f[0]}<select id="field_${f[0]}"><option value="true" ${f[2]===true?'selected':''}>true</option><option value="false" ${f[2]===false?'selected':''}>false</option></select></label>`
+        }
+        return `<label>${f[0]}<input id="field_${f[0]}" type="${f[1]}" value="${f[2]===null||f[2]===undefined?'':String(f[2])}" /></label>`
+      }).join('') + '<div style="display:flex;gap:8px;margin-top:8px"><button class="btn" id="saveBtn">Guardar</button><button class="btn ghost" id="cancelBtn">Cancelar</button></div>'
+    }
+
+    function saveCurrent(){
+      const ctx = currentEdit
+      if(!ctx) return
+      if(ctx.type==='articulos'){
+        const model = {
+          nombre: document.getElementById('field_nombre').value,
+          imagen: document.getElementById('field_imagen').value || null,
+          precio: parseFloat(document.getElementById('field_precio').value) || 0,
+          tamaño: document.getElementById('field_tamaño').value,
+          historia_procedencia: document.getElementById('field_historia_procedencia').value,
+          disponibilidad: document.getElementById('field_disponibilidad').value === 'true',
+          estado: document.getElementById('field_estado').value,
+          color: document.getElementById('field_color').value
+        }
+        if(ctx.id){ // update
+          const idx = DB.articulos.findIndex(x=>x._id===ctx.id)
+          DB.articulos[idx] = Object.assign({}, DB.articulos[idx], model)
+        } else {
+          model._id = uid('art')
+          DB.articulos.push(model)
+        }
+      }
+      if(ctx.type==='categorias'){
+        const model = { nombre: document.getElementById('field_nombre').value, imagen: null }
+        if(ctx.id){ const idx = DB.categorias.findIndex(x=>x._id===ctx.id); DB.categorias[idx]=Object.assign({},DB.categorias[idx],model) }
+        else { model._id=uid('cat'); DB.categorias.push(model) }
+      }
+      if(ctx.type==='almacen'){
+        const model = { articulo_id: document.getElementById('field_articulo_id').value, categoria_id: document.getElementById('field_categoria_id').value, stock: parseInt(document.getElementById('field_stock').value)||0, ubicacion: document.getElementById('field_ubicacion').value }
+        if(ctx.id){ const idx = DB.almacen.findIndex(x=>x._id===ctx.id); DB.almacen[idx]=Object.assign({},DB.almacen[idx],model) }
+        else { model._id=uid('alm'); DB.almacen.push(model) }
+      }
+      save(DB); render(); editorForm.innerHTML=''; currentEdit=null; editorTitle.textContent='Selecciona o crea un registro'
+    }
+
+    // ---------- event wiring ----------
+    document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click', e=>{
+      document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'))
+      e.target.classList.add('active')
+      currentView = e.target.dataset.target
+      document.querySelectorAll('.view').forEach(v=>v.style.display='none')
+      document.getElementById(currentView+'View').style.display='block'
+      editorForm.innerHTML=''; editorTitle.textContent='Selecciona o crea un registro'
+    }))
+
+    document.getElementById('newBtn').addEventListener('click', ()=>{
+      if(currentView==='articulos') openEditor('articulos')
+      if(currentView==='categorias') openEditor('categorias')
+      if(currentView==='almacen') openEditor('almacen')
+    })
+
+    document.getElementById('search').addEventListener('input', ()=>{ render() })
+
+    // delegate actions
+    document.addEventListener('click', (ev)=>{
+      const act = ev.target.dataset.action
+      const id = ev.target.dataset.id
+      if(!act) return
+      if(act==='edit') openEditor('articulos', id)
+      if(act==='delete') { if(confirm('Eliminar artículo?')){ DB.articulos = DB.articulos.filter(x=>x._id!==id); DB.almacen = DB.almacen.filter(x=>x.articulo_id!==id); save(DB); render() } }
+      if(act==='editCat') openEditor('categorias', id)
+      if(act==='delCat') { if(confirm('Eliminar categoría? (se eliminarán referencias en almacen)')){ DB.categorias = DB.categorias.filter(x=>x._id!==id); DB.almacen = DB.almacen.map(r=> r.categoria_id===id ? Object.assign({},r,{categoria_id:null}) : r); save(DB); render() } }
+      if(act==='editAlm') openEditor('almacen', id)
+      if(act==='delAlm') { if(confirm('Eliminar registro de almacén?')){ DB.almacen = DB.almacen.filter(x=>x._id!==id); save(DB); render() } }
+    })
+
+    document.getElementById('exportBtn').addEventListener('click', ()=>{
+      const blob = new Blob([JSON.stringify(DB,null,2)], {type:'application/json'})
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a'); a.href=url; a.download='almacen_export.json'; a.click(); URL.revokeObjectURL(url)
+    })
+
+    // initial render
+    render()
+
+    /*************************************************************************
+     * NOTAS PARA INTEGRACIÓN CON BACKEND
+     * - Actualmente la app usa localStorage para demo. Para conectar con MongoDB
+     *   crea un backend REST (Node/Express, .NET, PHP...) con endpoints:
+     *     GET/POST/PUT/DELETE /api/articulos
+     *     GET/POST/PUT/DELETE /api/categorias
+     *     GET/POST/PUT/DELETE /api/almacen
+     * - En los lugares de CRUD sustituye las operaciones sobre DB (localStorage)
+     *   por llamadas `fetch()` al backend y refresca la UI tras recibir respuesta.
+     * - Si quieres que el frontend se ejecute dentro de una aplicación Visual
+     *   Basic / VB6 / VB.NET, guarda este archivo .html y usa un control WebBrowser
+     *   o WebView para cargarlo. Para comunicación nativa -> JS puedes usar mensajes
+     *   entre el host y la página según la tecnología.
+     *************************************************************************/
+  </script>
+</body>
+</html>
